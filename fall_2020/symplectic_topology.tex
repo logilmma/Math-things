@@ -1,0 +1,720 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsfonts,amssymb, amsthm}
+
+\let\conjugatet\overline
+\usepackage{tikz-cd} 
+\usepackage{mathtools}          %loads amsmath as well
+\DeclarePairedDelimiter\Floor\lfloor\rfloor
+\DeclarePairedDelimiter\Ceil\lceil\rceil
+\usepackage[h margin=1 in, v margin=1 in]{geometry}
+%-------Packages---------
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{tikz-cd}
+\usepackage{tensor}
+\usepackage{cancel}
+\usepackage{braket}
+\usepackage{hyperref}
+\usepackage{chngcntr}
+\usepackage{titlesec}
+\usepackage{mathpazo}
+\usepackage{stmaryrd}
+%--------Section labels--------------
+
+\counterwithout{section}{chapter}
+
+\newcommand{\periodafter}[1]{#1.}
+\titleformat{\chapter}[frame]
+  {\normalfont}
+  {\filright\small\enspace\MakeUppercase{\chaptertitlename}~\thechapter\enspace}
+  {20pt}
+  {\Large\filcenter}
+\titleformat{\section}[runin]
+  {\normalfont\large\bfseries}{\thesection}{1em}{\periodafter}
+\titlespacing*{\section}
+  {0pt}{3.5ex plus 1ex minus .2ex}{0.5em}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- default
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem*{lem*}{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+\newtheorem{sol}[thm]{Solution}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{defn*}{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+\newtheorem{exer}[thm]{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem*{rem*}{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+\numberwithin{equation}{section}
+\graphicspath{{images/}}
+\bibliographystyle{plain}
+\def\acts{\curvearrowright}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+%begin macros
+\newcommand*{\isoarrow}[1]{\arrow[#1,"\rotatebox{90}{\(\sim\)}"
+]}
+\newcommand{\Lagr}{\mathcal{L}}
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\lalg}[1]{\mathfrak{#1}}
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+\newcommand{\ser}{\sum_{n=0}^\infty}
+\newcommand*{\Perm}[2]{{}^{#1}\!P_{#2}}%
+\newcommand*{\Comb}[2]{{}^{#1}C_{#2}}%
+\newcommand{\mqed}{\hfill\newline\null \hfill$\square$\\ }
+\makeatletter
+\newcommand{\extp}{\@ifnextchar^\@extp{\@extp^{\,}}}
+\def\@extp^#1{\mathop{\bigwedge\nolimits^{\!#1}}}
+\makeatother
+\renewcommand{\tilde}{\widetilde}
+%end macros
+
+
+\title{M392C: Symplectic Topology}
+\author{Reese Lance}
+
+\date{Fall 2020}
+
+\begin{document}
+\maketitle
+\abstract{Class taught by Timothy Perutz at the University of Texas at Austin, notes taken by Reese Lance. The notes are not live texed. They are post-mortem-texed, that is, taken by hand during class and typed later. Some of my own thoughts are interjected, but rarely. I initially thought to try to separate my thoughts from the professor's but it becomes too difficult. As such I will also try to expand on examples which are mentioned in passing in class and spell out proofs which are glossed over. This helps to justify the existence of this set of notes, as opposed to live-texed notes (which are often available for classes at this university), which are probably slightly better for a faithful representation of what is being taught in the classroom. Especially because some of my own content is interspersed throughout these notes, any corrections, questions, comments, suggestions, etc., can be sent via email (reese.lance@utexas.edu) or if you can find any other way to communicate with me, that is also fine. At the moment I'm trying to get the notes written, and worrying about the format later. I'm also not going to track theorem and lemma numbers, as I think that's mostly useless. If a proof somewhere says ``Applying Theorem $X$'', it can usually be determined from context what theorems need to be invoked, and if the reader doesn't find it readily apparent, then searching for the theorem in question will be a valuable experience. Also I always forget to write down the numbers. Also as I revisit and add in more stuff, the numbering becomes involved and I'd have to actually figure out how to number properly instead of just manually putting numbers, which is what would have been the plan. In this class, Perutz assigns problems during the lectures, which are meant to be thought about afterwards and discussed during the beginning of the subsequent class. I'll mark these as ``exercise'' and attach my solution afterwards.}
+\newpage
+\begin{center}
+\Large Table of Contents
+\end{center}
+\hyperref[sec:1]{\textcolor{blue}{1. Introduction to Symplectic Vector Spaces and Manifolds}}\\
+\hyperref[sec:2]{\textcolor{blue}{2. Lagrangian Submanifolds}}\\
+\hyperref[sec:3]{\textcolor{blue}{3. Lec 3}}\\
+\newpage
+\chapter{Introduction to Symplectic Vector Spaces and Manifolds}
+\section*{Lecture 1, Aug 27}
+\label{sec:1}
+We begin in a simple setting where we can speak about the notion of ``symplectic forms''. \\
+\textbf{Definition: } A \underline{symplectic vector space (SVS)}, $(V,\beta)$ is a vector space over $\bb R$, equipped with a bilinear, skew-symmetric, non-degenerate form $\beta: V \times V \to \bb R$. \\\\
+\textbf{Recall: }Skew symmetric forms are those which satisfy the condition $\beta(x,y) + \beta (y,x) = 0$\footnote{When not working over a field of characteristic 2, this is equivalent to the condition that $\beta(x,x) = 0$}. Non-degeneracy is the condition that the map $V \to V^*$ sending $v \mapsto \beta(v,-)$ is an isomorphism. More concretely\footnote{These are only equivalent in finite dimensional vector spaces}, $\beta$ is non-degenerate if, fixing $$v \in V,\ \beta(v,y) = 0\ \forall\ y\in V \Rightarrow v = 0$$\\
+If we pick a basis $\{e_i\}$ for $V$, then
+$$
+	\beta_{ij} = \beta(e_i,e_j)
+$$
+is an invertible, skew-symmetric matrix. \\
+\textbf{Exercise: } If $(V,\beta)$ is a SVS, show that dim $V = 2n$ for some $n$, and admits a \underline{symplectic basis}, $\{e_1,\dots, e_n, f_1, \dots, f_n\}$, i.e. one which satisfies the equations: 
+$$
+	\beta(e_i,e_j) = 0 = \beta(f_i,f_j), \ \ \ \ \ \ \ \ \text{and} \ \ \ \ \ \beta(e_i,f_j) = \delta_{ij}
+$$
+\textbf{Proof: }We note the first statement is implied by the second. To prove the second statement, pick a non-zero vector, $v$, and set $e_1 = v$. Because $\beta$ is non-degenerate, there exists $w \in V$ such that $\beta(v,w) \ne 0$. Note that this implies $w$ and $v$ are linearly independent. Set $f_1 = \frac{w}{\beta(v,w)}$. We see that 
+$$
+	\beta(e_1,f_1) = 1
+$$
+If span($e_1,f_1) = V$, we are done. If not, assume that we have repeated this step $n-1$ times, that is, we have basis vectors $\{e_1,\dots,e_{n-1},f_1,\dots,f_{n-1}\}$ (call $E$ the span of these vectors) such that $\beta(e_i,e_j) = 0 = \beta(f_i,f_j)$ and $\beta(e_i,f_j) = \delta_{ij}$. If we assume $E \ne V$, then we recall from linear algebra that $V = E \oplus E^\perp$, i.e. there is some vector $e_n \in V$ which is not in the span of the $2n-2$ basis vectors, and which pairs to 0 with all the $\{e_i\}$ and $\{f_i\}$. Because $e_n \ne 0$, there is some vector $u \ne 0 $, such that $\beta(e_n,u) \ne 0$. In particular, $u$ and $e_n$ are linearly independent. Now set $f_n = \frac{u}{\beta(e_n,u)}$. Either $f_n \in E$ or $f_n \in E^\perp$. Assume $f_n \in E$. Then
+\begin{gather*}
+	f_n = \sum_i \lambda_i e_i + \sum_j \omega_j f_j\\
+	\Rightarrow \boxed{\beta\left(e_n, f_n\right)} = \beta\left(e_n, \sum_i \lambda_i e_i + \sum_j \omega_j f_j\right)\\
+	= \sum_i \lambda_i \beta(e_n, e_i) + \sum_j\omega_j\beta(e_n,f_j) = \boxed{0}\ \ \ \ \ \perp
+\end{gather*}
+so $f_n \in E^\perp$, i.e. it pairs to 0 with every basis vector except $e_n$, which completes the induction proof. Because $V$ is f.d., this process will terminate eventually, and dim $V = 2n$ for some $n$, with the symplectic basis $\{e_1, \dots, e_n, f_1, \dots, f_n\}$. \\\\
+Technically, we have proven the first statement already, but I wanted to prove it independently just for fun. For the first result, I'm going to try to work with the matrix $\beta_{ij}$ instead. I initially tried to show that you could do elementary matrix operations to any skew symmetric, invertible matrix to get it into the form 
+$$
+	\beta_{ij} = \begin{pmatrix} 0_n & I \\ -I & 0_n\end{pmatrix}
+$$
+which should suffice, but I wasn't able to\footnote{I think it should be true though? I think it's equivalent to the problem statement}. So I came up with the following:\\
+Pick any basis of $V$. Then $\beta_{ij}$ is an invertible, skew symmetric matrix. But we know
+$$
+	\text{det } \beta_{ij}^T = \text{det } -\beta_{ij}
+$$
+Multiplying the matrix by a scalar has the effect of multiplying each of the $n$ rows by that scalar, which gives applies $n$ factors of $(-1)$ to the determinant, i.e.
+\begin{gather*}
+	\text{det }- \beta_{ij} = (-1)^n \text{det } \beta_{ij}
+\end{gather*}
+From which it follows that if $n$ is odd, $\beta_{ij}$ is singular\footnote{again, assuming infinite characteristic}, a contradiction. Thus $n$ is even. \mqed
+\\
+We know\footnote{We recall the exterior algebra is a quotient of the tensor algebra by elements of the form $x\otimes x$, so the exterior algebra consists of antisymmetric tensors. The wedge product is the ``image of the tensor product'' through this quotient. So we are saying that $\beta$ is an anti-symmetric 2-tensor, i.e. it is an object which eats 2 vectors and anti-symmetrically returns an element of the base field} $\beta \in \extp^2 (V^*)$. If we pick a (symplectic) basis of $V$, and $\{e_1^*, \dots, e_n^*, f_1^*, \dots, f_n^*\}$ is the dual basis\footnote{The dual basis is the basis $\{v^i\}$ of $V^*$ such that $v^i \cdot v_j = \delta_{ij}$}, then 
+$$
+	\beta = \sum_{i} e_i^* \wedge f_i^*
+$$
+we will refer to this as the standard symplectic pairing on $\bb R^{2n},\ \beta_0$. The matrix represented by $\beta_0$ is
+$$
+	(\beta_0)_{ij} = \begin{pmatrix} 	0_n & I_n \\ -I_n & 0	\end{pmatrix}
+$$
+This corresponds to the standard almost complex structure\footnote{An almost complex structure is a linear endomorphism on each tangent space of the manifold, varying smoothly from point to point, which squares to -1} on $\bb C^n$, multiplication by $i$. \\\\
+\textbf{Definition: }An \underline{isomorphism of symplectic vector spaces $(V,\beta) \to (V',\beta')$} is a linear isomorphism $\varphi: V \to V'$ which is compatible with the symplectic pairing: 
+$$
+	\beta'(\varphi v, \varphi w) = \beta (v,w) 
+$$
+or equivalently, that the diagram
+$$
+\begin{tikzcd}
+V \times V \arrow[r, "\varphi \times \varphi"] \arrow[d, "\beta"'] & V' \times V'  \arrow[ld, "\beta'"] \\
+\mathbb{R}                                             &                                   
+\end{tikzcd}
+$$
+commutes. In fancier language, if 
+\begin{gather*}
+	\varphi^*: \extp^2(V'^*) \to \extp^2(V^*)\\
+	\varphi^*(\beta') = \beta
+\end{gather*}
+	I believe the induced map here is given by taking the isomorphism $V \to V^*$ provided by $\beta$, then inducing a map on the exterior powers $\extp^2(\varphi)$, given by applying $\varphi$ to each component of the wedge. Then we my re-interpret our definition of a symplectic basis as an isomorphism $b: (V,\beta) \to (\bb R^{2n}, \beta_0)$.\\
+\textbf{Definition: }The \underline{symplectic linear group, Sp($V, \beta)$}, is the group of isomorphisms $(V,\beta) \to (V, \beta)$. \\
+\\
+We typically abbreviate Sp($\bb R^{2n}, \beta_0)$ as Sp($\bb R^{2n})$. \\
+\textbf{Exercise: }Let $A \in GL_{2n}(\bb R)$ and $\{e_i, f_i\}$ a symplectic basis for $\bb{R}^{2n}$. Then 
+$$
+A \in \text{Sp}(\bb R^{2n}) \iff	A^TJ_0A = J_0
+$$
+where $J_0 = \begin{pmatrix} 0_n  & -I_n \\ I_n & 0_n \end{pmatrix}$.\\
+Interpret this condition in terms of block matrices.\\
+\textbf{Proof: }($\Rightarrow:)$ If $A \in \text{Sp}(\bb R^{2n})$, then $A$ commutes with the standard symplectic pairing on $\bb R^{2n}$, i.e.
+$$
+	(\beta_0)(Av,Aw) = \beta_0(v,w)
+$$
+still need to come back and do this \mqed
+Let $(V,\beta)$ have determinant line det $V^* := \extp^{2n}V^*$. Then claim $\beta^n := \overbrace{\beta \wedge \dots \wedge \beta}^{n \text{ times}}$ is a non-zero element of the determinant line. To show this,
+\begin{gather*}
+	\beta_0 = \sum_i e_i^* \wedge f_i^*\\
+	\Rightarrow \beta_0^n = n! (e_i^* \wedge f_i^*) \wedge \dots \wedge (e_n^* \wedge f_n^*) \ne 0 \in \text{det } \bb R^{2n*}
+\end{gather*}
+Then because $(V,\beta) \cong (\bb R^{2n}, \beta_0)$, we are done. \\
+Then, $\forall\ A \in \text{Sp}(V, \beta), $
+$$
+	A^*\beta = \beta \Rightarrow A^* \beta^n = \beta ^n 
+$$
+and 
+\begin{gather*}
+	A^*(\beta^n) = (\text{det }A)\beta^n \Rightarrow \text{det }A = 1\\
+	\Rightarrow \text{Sp}(V,\beta) \subset \text{SL}(V)
+\end{gather*}
+we can interpret the first equality as the definition of $\text{det }A$. So symplectic isomorphisms are volume preserving. \\\\
+Onto symplectic manifolds. \\
+\textbf{Definition: }A \underline{symplectic manifold} is a smooth $(C^\infty)$ manifold equipped with a closed, non-degenerate 2-form, $\omega$. \\\\
+We think of $\omega$ as a skew-symmetric pairing on each tangent space which varies smoothly from tangent space to tangent space. Here, non-degeneracy implies
+\begin{gather*}
+	T_p M \to T^*_p M\\
+	v \mapsto \omega_p(v,-) \text{     is an isomorphism}
+\end{gather*}
+\textbf{Definition: } A diffeomorphism $\varphi(M,\omega_M) \to (N,\omega_N)$ is called a \underline{symplectomorphism} if it pulls back $\omega_N$ to $\omega_M$, i.e.
+$$
+	\varphi^*(\omega_N) = \omega_M
+$$
+\\
+We interpret $\varphi^*$ as the pull-back of tensor fields, since $\omega$ is a $(0,2)$ tensor. \\
+\textbf{Definition: }Aut($M,\omega) = \Big\{ \text{symplectomorphisms }(M,\omega) \to (M,\omega)\Big\}$.\\\\
+The prototype symplectic vector space is $\bb R^{2n}, \omega_0$. If we choose coordinates $(x_1,\dots,x_n,y_1,\dots,y_n)$, then 
+$$
+	\omega_0 = \sum_i dx_i \wedge dy_i
+$$
+In this case, the coordinate vector fields,
+$$
+	\left( \frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n}, \frac{\partial}{\partial y_1}, \dots, \frac{\partial}{\partial y_n}\right)
+$$
+form a symplectic basis\footnote{wouldn't this be more appropriately called something like a symplectic frame of $(M,\omega)$?} for $T_{(x,y)} \bb R^{2n}$. \\\\
+\textbf{Theorem (Darboux):}\textit{ For all $ \omega$ on $M$ (dimension $2n$) and $\forall p \in M,\ \exists$ neighborhoods $U \ni p$ and $U' \ni 0 \in \bb R^{2n}$ such that $\phi: U \to U'$ is a symplectomorphism.}\\
+\textbf{Proof: }We will come back and prove this later, once we have more machinery. \\\\
+In spirit, this theorem says that you can always find local coordinates in which the coordinate vector fields form symplectic bases for the tangent space of any (even dimension) manifold, as we were able to do globally in the case of $\bb R^{2n}$. \\
+As a consequence, we may re-interpret the definition of a symplectic manifold as an equivalence class of symplectic atlases:
+$$
+	A = \left\{ (U_i,\phi_i)\ |\ \phi_j \circ \inv \phi_i\ \text{is a symplectomorphism}\right\}
+$$
+where two atlases are considered equivalent if their union is a symplectic atlas. \\
+\textbf{Question: }Does there exist a symplectomorphism of $\bb R^{2n}$ which carries the open unit ball $B^{2n}(0;1)$ to a ball of strictly smaller radius? \\
+\textbf{Answer: }No, symplectomorphisms preserve the standard volume form on $\bb R^{2n}$. As a precursor to this, we also saw that in the context of vector spaces, isomorphisms have determinant 1. For the manifold computation,
+\begin{gather*}
+		\omega_0^n = n!\ dx_1 \wedge dy_1 \wedge \dots \wedge dx_n \wedge dy_n\\
+		\phi^*(\omega_0) = \omega_0 \Rightarrow \phi^*(\omega_0^n) = \omega_0^n
+\end{gather*}
+So $\phi$ preserves the standard volume form, and volume is calculated by integrating against the volume form: 
+$$
+	\text{volume}(B) = \int_{B} \text{vol}
+$$
+\mqed
+\textbf{Question: }Does there exist a symplectomorphism of $\bb R^{2n}$ which carries the open ball $B^{2n}(0;1)$ into the cylinder $B^{2}(0;r) \times \bb R^{2n-2}$ for $r < 1$?\\
+\textbf{Answer: }No. This result is Gromov's non-squeezing theorem, which we will also prove later. 
+\chapter{Lagrangian Submanifolds}
+\section*{Lecture 2, Sep 1}
+\label{sec:2}
+There are many important types of submanifolds of symplectic manifolds that emerge in the study of symplectic topology, but the most ubiquitous example is that of the Lagrangian submanifold. \\
+\textbf{Definition: }A \underline{Lagrangian immersion} is an immersion\footnote{An immersion is a smooth mapping such that the derivative is injective at all points} $i: L \to (M,\omega)$ such that dim $L = $ dim $M/2$ and $i^* \omega = 0$. \\\\
+i.e. $\forall u,v \in TL,\ \omega(u,v) = 0$. Similarly we may define Lagrangian embeddings.\\
+\textbf{Definition: }A \underline{Lagrangian submanifold} is the image of a Lagrangian embedding. \\\\
+Recall that symplectomorphisms preserve the symplectic form, so they also carry Lagrangian submanifolds to Lagrangian submanifolds. \\
+\textbf{Example: } Define $C(r_1,\dots,r_n) \subset (\bb R^{2n},\omega_0) = \underbrace{\bb R^2 \times \dots \times \dots\bb R^2 }_{\text{n times}}$ by 
+$$
+	C(r_1,\dots,r_n) := C(r_1) \times \dots \times C(r_n)
+$$
+where $C(r)$ is the circle of radius $r$ in $\bb R^2$. This is  a Lagrangian submanifold of $\bb R^2$. In fact, every curve $\gamma: I \to \bb R^2$ is Lagrangian because $TI$ is one-dimensional, so $\gamma^*(\omega_0) = 0$. The product of Lagrangian submanifolds is also Lagrangian\footnote{If $L_1 \subset M_1$ and $L_2 \subset M_2$ are Lagrangian, then $L_1 \times L_2$ is Lagrangian in $M_1 \times M_2$, otherwise the dimensions don't work out}, so $C(r_1,\dots,r_n)$ is a Lagrangian submanifold in $\bb R^{2n}$. \\
+\textbf{Corollary: }\textit{Every symplectic manifold has a Lagrangian submanifold.}\\
+\textbf{Proof: }First we need a lemma: \\
+\textbf{Lemma: }\textit{If $\varphi: (M,\omega) \to (N,\omega')$ is a symplectomorphism, and $i: L \to N$ is a Lagrangian submanifold, then $\inv \varphi\circ i (L) \subset M$ is also a Lagrangian submanifold.}\\
+\textbf{Proof: }Because $\varphi$ is a diffeomorphism, we have 2dim $L = $ dim $M$. Further,
+\begin{gather*}
+	(\inv \varphi \circ i)^*(\omega) = i^* \circ (\inv \varphi)^*(\omega) = i^*(\omega') = 0
+\end{gather*}
+\mqed
+Returning to the Corollary, by Darboux's theorem, we can take any chart $(U,\varphi)$ where $\varphi$ is a symplectomorphism to an open neighborhood of $0 \in \bb R^{2n}$, and define a Clifford torus of sufficiently small radius in $\varphi(U) \subset \bb R^{2n}$, $C($\textbf{r}$)$. Then by the previous lemma, $\inv \varphi (C($\textbf{r}$))$ is a Lagrangian submanifold of $M$.\mqed\\
+\textbf{Question: }Which $n$-manifolds can appear as Lagrangian submanifolds of $(\bb R^{2n},\omega_0)$? Or which admit a Lagrangian immersion? \\
+Simpler question: Which $n$-manifolds can be immersed smoothly into $\bb R^{2n}$? Answer, all of them, by Whiteny embedding. What about embeddings? Answer, most of them, but not all, by strong Whitney embedding. \\
+\textbf{Proposition: }\textit{If $L \subset (\bb R^{2n}, \omega)$ is a closed, orientable, Lagrangian submanifold, then }
+$$
+\chi(L) = 0 
+$$
+\textit{and if $L$ is non-orientable, then $\chi(L)$ is even.}\\
+\textbf{Proof: }Recall that $J_0 = \begin{pmatrix} 0_n & -I_n \\ I_n & 0_n \end{pmatrix}$ describes multiplication by $i$ on $\bb C^n$. Then
+$$
+	L \text{ Lagrangian}\ \  \Rightarrow \ \ T_p \bb R^{2n} \cong T_p L \oplus J_0 T_p L
+$$
+We will take this isomorphism for granted now, and will be proved later. Given that, $J_0$ gives an isomorphism
+$$
+	J_0|_{TL}:TL \to N_L 
+$$
+the normal bundle to $L$. Then the self-intersection number, $L \cdot L = $Euler $\#(N_L)$, the signed count of zeros of a suitably transverse section of $N_L$. 
+\begin{gather*}
+	= \text{Euler }\#(TL) \\
+	= \chi(L)
+\end{gather*}
+by Poincare-Hopf theorem. But the self intersection number of $L \subset \bb R^{2n} = 0$. \mqed 
+\textbf{Remark: }If $n$ is odd, this result is not interesting, since the Euler characteristic is already 0. \\
+\textbf{Theorem (Gromov): }\textit{If $L \subset \bb R^{2n}$ is compact and Lagrangian, then $b_1(L) > 0$, where $b_1$ is the first betti number.}\\
+\mqed
+\\
+\textbf{Corollary: }$S^n$, $\bb RP^n$ \textit{cannot emerge as Lagrangian manifolds.}\mqed\\
+So many manifolds do not admit Lagrangian embeddings. This is an example of symplectic rigidity. If we turn to the immersion question, we have an example of symplectic flexibility, via the theorem\\
+\textbf{Theorem (Gromov, Lees): } \textit{Every $n$-manifold admits a Lagrangian immersion $L \to \bb R^{2n}$.}\\
+This interplay of rigidity and flexibility is what makes symplectic topology so interesting. \\
+Returning to Clifford tori: \\
+\textbf{Question: }For what \textbf{r} does there exist $\varphi \in \text{Aut}(\bb R^{2n},\beta_0)$ such that 
+$$
+	\varphi(C(1,\dots,1)) = C(r_1,\dots,r_n)
+$$
+Answer: $\varphi$ exists only when \textbf{r} $= (1,\dots,1)$. Long, hard proof that I didn't understand. \mqed \\
+We will now talk about complex projective space. $S^2 \subset\bb R^3$ admits an $SO(3)$-invariant symplectic form, $\omega$, defined in the following exercise:\\
+\textbf{Exercise: }\textit{For $\omega = i(e)dx_1 \wedge dx_2 \wedge dx_3$, where $e = \frac{1}{2}\nabla |x|^2$, show $\int_{S^2} \omega = 4\pi$. }\\
+\textbf{Proof: }Expanding out, this is 
+$$
+	\int_{S^2} x_1 dx_2 \wedge dx_3 + x_2 dx_1 \wedge dx_3 + x_3 dx_1 \wedge dx_2
+$$
+By Stokes' theorem 
+\begin{gather*}
+	= \int_{D^3} d\Big(x_1 dx_2 \wedge dx_3 + x_2 dx_1 \wedge dx_3 + x_3 dx_1 \wedge dx_2	\Big)\\
+	= \int_{D^3} dx_1 \wedge dx_2 \wedge dx_3 + dx_2 \wedge dx_1 \wedge dx_3 + dx_3 \wedge dx_1 \wedge dx_2\\
+	= 3\int_{D^3}dx_1 \wedge dx_2 \wedge dx_3 = 3\left(\frac{4}{3}\pi R^3\right) = 4\pi 
+\end{gather*}
+\mqed
+We may think of $\bb CP^n$ as 
+$$
+	\bb CP^n = S^{2n+1}\big/U(1)
+$$
+This space admits a unique symplectic form, $\tau_n$, such that i) $\tau_n$ is invariant under the action of $PU(n+1)$, and ii) $\int_{\bb CP^n} \tau_n = 1$, called the Fubini-Study form.\\
+To expand on condition i), $U(n+1) \acts \bb C^{n+1}$, preserving $S^{2n+1}$. Thus it induces an action $U(n+1) \acts S^{2n+1}/U(1)$, and the scalars in $U(n+1)$ act trivially, so there is an induced action of $PU(n+1) = \frac{U(n+1)}{U(1)}$.
+\chapter{Symplectic topology of $\bb CP^n$}
+\section*{Lecture 3, Sept 3}
+\label{sec:3} 
+Thinking of $\bb C^{n+1}$ as a complex vector space, with the standard hermitian product $h_0(z,w) = \sum_j z_j \overline{w}_j$, 
+$$
+	h_0 = g_0 + i\beta_0
+$$ 
+where $g_0$ is the dot product, and $\beta_0$ is the standard symplectic pairing. Recall $J_0$ is the endomorphism of multiplication by $i$. A couple of facts:\\
+\textbf{Proposition: }
+\begin{gather*}
+	i) \beta_0(u,J_0 v) = g_0(u,v)\\
+	ii) \beta_0(v,J_0v) = g(v,v) > 0\\
+	iii) \beta_0(J_0v,J_0v) = \beta_0(v,v)
+\end{gather*}
+\textbf{Proof: }just plug in\mqed\\
+Think of $\bb C^{n+1} = \bb R^{2n+2}$ as a symplectic manifold with $\omega_0 = \sum_j dx_j \wedge dy_j$, and define 
+$$
+	\eta := \omega_0|_{S^{2n+1}}
+$$
+Note $\eta$ is invariant under $U(n+1)$. By definition, $U(n+1)$ acts on $\bb C^{n+1}$ and preserves $S^{2n+1}$, but that doesn't guarantee this invariance. Instead, $U(n+1)$ is defined by fixing the hermition form $h_0$. In particular, then, it fixes its real and imaginary parts, so it fixes $\omega$, and thus $\eta$. \\
+We think of $\bb CP^n = S^{2n+1} \big/ U(1)$. Then 
+$$
+	T_z S^{2n+1} = T_z(U(1)\cdot z) 	\oplus z^\perp
+$$
+where the orthogonal complement is taken wrt $h_0$, so $z^\perp$ has complex dimension $n$, and $T_z(U(1)\cdot z)$ has real dimension 1. We have the quotient map
+$$
+	\rho: S^{2n+1} \to \bb CP^n
+$$
+known as the Hopf fibration. The derivative restricts to an isomorphism
+$$
+	D_z\rho: z^\perp \to T_{[z]} \bb CP^n
+$$
+because it kills off the direction generated by $U(1)$, and is an isomorphism on the rest of the space. This is a real isomorphism, but of course, $\bb CP^n$ can be viewed as a complex manifold with complex charts and tangent spaces. In this case, $D_z\rho$ becomes a complex linear isomorphism. Then we claim there exists a unique 2-form $\tau$ on $\bb CP^n$ such that 
+$$
+	\rho^*\tau = \frac{1}{\pi}\eta
+$$
+So define 
+$$
+\tau_{[z]}(u,v) = \frac{1}{\pi}\eta_z(u^\natural, v^\natural)
+$$
+where $x^\natural$ denotes the lift via  the isomorphim $D_z\rho$. \\
+\textbf{Exercise: }Show that $\tau$ is well defined, and why is it symplectic? Why is it a (1,1)-form, i.e. $\tau(Ju,Jv) = \tau(u,v)$, and why is $\tau_n|_{\bb CP^{n-1}} = \tau_{n-1}$? \\\\
+\textbf{Proposition: }
+$$
+	\int_{\bb CP^1} \tau_n = 1
+$$
+\textbf{Proof: }In class notes.\mqed
+\textbf{Proposition: }\textit{Define $\phi: \bb C \to \bb CP^1,\ \phi(z) = [z:1]$. Then }
+$$
+	\phi^*(\tau_1) = \frac{dx \wedge dy}{\pi(1-	|z|^2)^2}
+$$
+\textbf{Proof: }In class notes. \\
+Then if $f$ is a function on $\bb C^n$, define the 1-form $d^c f$ as 
+\begin{gather*}
+	d^cf(v) = df(J_0v)\\
+	= \sum_k (\partial_{y_k} f)dx_k - (\partial_{x_k} f) dy_k\\
+	\Rightarrow \phi^* \tau_1 = d(d^cK)\\
+	\text{where } K = -\frac{1}{4\pi} \text{log}(1+|z|^2)
+\end{gather*}
+$K$ is known as a Kahler potential. \\
+\textbf{Remark: }In the case of $(\bb C^n,\omega_0)$,
+$$
+	\omega_0 = dd^c\left(\frac{|z|^2}{2}\right)^2
+$$
+so there is no log business. \\
+Onto the symplectic topology of $\bb CP^n$, mostly $n = 2$. We will state some results which show off the symplectic topology, some of which we will prove later in the course, some of which we won't prove at all because their proofs involve the geometric analysis of Seiberg-Witten theory. \\
+\textbf{Theorem (McDuff): }\textit{If $M$ is a closed symplectic 4-manifold, and $b_2(M) = 1$. Suppose $S \subset M$ is an embedded 2-sphere, $S \cdot S = 1$, $S$ is a symplectic manifold, and $\int_S \omega = 1$. Then there exists a symplectomorphism }
+$$
+	(M,\omega) \to (\bb CP^2, \tau_2)
+$$\\
+This result was improved on later,\\
+\textbf{Theorem (Taubes): }\textit{If $\omega$ is a symplectic form on $\bb CP^2$ with $\int_{\bb CP^1} \omega = 1$, then $\exists$ a self-diffeomorphism $\phi$ of $\bb CP^2$ such that $\phi^* \omega = \tau_2$.}\\\\
+\textbf{Theorem (Gromov): }\textit{Aut($\bb CP^2),\tau_2$ deformation retracts to its subgroup $PU(3)$. }\\\\
+\textbf{Theorem (Kronheimer–Mrowka)} \textit{Let $S_1$ and $S_2$ be closed, connected, orientable surfaces embedded in $\bb CP^2$, in the same homology class. If $S_1$ is a $\tau$-symplectic surface, then the genus of $S_2$ is at least that of $S_1$. }\\
+So symplectic surfaces minimize the genus of their homology class. \\\textbf{Theorem (Seidel): }\textit{If $V\cong S^n \subset M$ is a Lagrangian submanifold of $(M,\omega)$, then $\exists$ a symplectic automorphism, $\tau_V$, supported in a tubular neighborhood of $V$, which is the antipodal map when thinking of $V$ as $S^n$.} \\
+This is known as a generalized Dehn twist, and becomes the usual Dehn twist when $V = S^1$. \\
+\textbf{Theorem (Seidel): }\textit{If $n = 2$, $\tau_V^2$ is smoothly isotopic to the identity, but for certain examples, it is not isotopic to $id_M$ in Aut$(M,\omega)$.}
+\chapter{Symplectic linear algebra}
+\section*{Lecture 4, Sept 8}
+\label{sec:4} 
+We return to symplectic linear algebra\\
+\textbf{Definition: }$\beta \in \extp^2(V^*)$ is \underline{symplectic} if it is non-degenerate. \\\\
+\textbf{Defintion: }If $(V,\beta)$ and $(V',\beta')$ are symplectic vector spaces, a linear map $\alpha: V \to V'$ is a symplectic linear map if $\alpha^* \beta' = \beta$. \\\\
+\textbf{Remarks:} i) Being symplectic is an open condition on $\beta$, because the non-degeneracy condition is equivalent to a determinant being non-zero, which is an open condition. ii) Symplectic vector spaces form a category. iii) Symplectic maps are injective. To see this, suppose $\varphi: (V,\beta) \to (V',\beta')$ is a symplectic linear map. Then for $v,w \ne 0 \in V$,
+\begin{gather*}
+	\varphi(v) = \varphi(w) \\
+	\Rightarrow \beta(v,w) = \beta'(\varphi(v),\varphi(w)) = 0\\
+	\Rightarrow \beta(v,w) = 0 \Rightarrow v = w
+\end{gather*}
+This easy result already constricts the space of symplectic maps. There are no symplectic maps going from $V \to V'$ if dim $V' < $ dim $V$, and if you want to go up in dimension, the map has to be injective. iv) If $\beta$ is degenerate, then the induced map on $V\setminus \text{ker} \beta^\#$ is a symplectic form. v) $GL(n)$ acts on the symplectic pairings by $A \cdot \beta = A^* \beta$. In this case, if $\beta$ is represented by the matrix $S$, then $A^* \beta$ is represented by $A^TSA$. \\
+Now we will talk about symplectic subspaces. If $U \subset V$ is a subspace of $(V,\beta)$ a symplectic vector space, we can speak of the symplectic complement, $$U^\beta:= \{v \in V\ |\ \beta(u,v) = 0\ \forall\ u \in U\}$$
+Further,
+\begin{gather*}
+	\beta^\#: V \to V^*\\
+	U^\beta \mapsto \text{ann}(U):= \{a \in V^*\ |\ a(u) = 0\ \forall\ u\in U\}
+\end{gather*}
+However, ann$(U)$ is defined without reference to the symplectic form, so we have dim $U^\beta = $ dim ann$(U) = $ codim$_V(U)$. It's clear that $U \subset U^{\beta\beta}$, and since they have the same dimension, (taking the codimension twice), they are equal.\\
+Recall a symplectic subspace is a vector subspace which is also a symplectic vector space by the restriction of the symplectic form. This requirement is equivalent to intersecting trivially with its symplectic complement, so that if $U$ is a symplectic subspace, then 
+$$
+	V = U \oplus U^\beta
+$$
+By applying induction, we can conclude that each symplectic vector space is the direct sum of many 2-dimensional subspaces. \\
+Onto complex structures\footnote{We took an aside for the Pfaffian, but I'm already behind in the notes and it's mostly irrelevant for the course, so I'm skipping over it.}. We are working with the standard hermitian form, $h_0$. If $(e_i)$ is the standard complex basis of $\bb C^n$, then $\bb R^{2n}$ has a standard basis $e_1, \dots, e_n, f_1, \dots, f_n)$, where $f_j = i\cdot e_j$, in which case the hermitian pairing can be written $h_0 = g_0 + i \beta_0$, where $g_0$ is the standard dot product and $\beta_0$ is the standard symplectic pairing. Let $J_0 \in$ End$(\bb R^{2n})$ represent multiplication by $i$. Then i) $J_0^2 = -1$, ii) $h_0(J_0z, J_0w) = h_0(z,w)$, i.e. $J_0$ is unitary. Also, $g_0(w,v) = \beta_0(w,J_0v)$, and $g_0(J_0w,v) = \beta_0(w,v)$.  \\
+\textbf{Definition: }If $(V,\beta)$ is a symplectic vector space, a \underline{compatible complex structure}, $J$, is a complex structure, i.e. $J \in $ End($V$) such that $J^2 = -1$, and 
+\begin{gather*}
+	i)\ \beta(Ju,Jv) = \beta(u,v)\\
+	ii)\ \beta(u,Ju) > 0,\ \ \ u \ne 0 
+\end{gather*}
+\\
+In such a case, defining $g(u,v) := \beta(u,Jv)$ defines an inner product. We note that complex structures always exist, because every symplectic vector space is isomorphic to $\bb R^{2n}$, which has a compatible complex structure. $J$ makes $V$ a complex, hermitian vector space, $i = J$, $h = g + i\beta$. \\
+\textbf{Definition: }A subspace $I \subset (V,\beta)$ is \underline{isotropic} if $\beta|_I = 0$, or equivalently, $I \subset I^\beta$. $C \subset (V,\beta)$ is called \underline{coisotropic} if $C^\beta \subset C$. \\\\
+It follows that if $I$ is isotropic, $I^\beta$ is coisotropic. \\
+\textbf{Example: }Given a symplectic basis, $(e_i,f_j)$, 
+\begin{gather*}
+	I_k := \text{span}(e_1,\dots,e_k) \text{   is isotropic}\\
+	C_k := I_k^{\beta_0} = \text{span}(e_1, \dots, e_n, f_{k+1}, \dots, f_n)\text{    is coistropic}
+\end{gather*}	
+\\
+\textbf{Definition: }A subspace, $L$, is called \underline{Lagrangian} if $L^\beta = L$. \\\\
+\textbf{Exercise: }If $L\subset (V,\beta)$, the following are equivalent: \\
+i) $L$ is Lagrangian \\
+ii) $L$ is maximal isotropic\\
+iii) $L$ is minimal coisotropic\\
+iv) $\exists$ a symplectic basis $(e_1,\dots,e_n,f_1,\dots,f_n)$ such that $L = $span$(e_1,\dots,e_n)$\\
+v) dim $L = \frac{1}{2}$ dim $V$, and $L$ is either isotropic or coisotropic 
+\chapter{Symplectic linear algebra II}
+\section*{Lecture 5, Sept 10}
+\label{sec:5}
+We note that the exercise from the last lecture characterizes how isotropic and coisotropic subspaces look. \\
+\textbf{Example: }If $\alpha: (V,\beta) \to (V', \beta')$ is a symplectic linear isomorphsim, then $\Gamma_\alpha\subset (V\oplus V', -\beta + \beta')$ is Lagrangian. \\
+\textbf{Proof: }We must show $-\beta + \beta' \equiv 0$ on $\Gamma_\alpha$. For any $(v_1,v_1'), (v_2,v_2') \in \Gamma_\alpha$
+\begin{gather*}
+	(-\beta + \beta')\Big((v_1,v_1'), (v_2,v_2')	\Big) \equiv -\beta(v_1,v_2) + \beta'(v_1',v_2')\\
+	= -\beta(v_1,v_2) + \beta'\Big(\alpha(v_1), \alpha(v_2)\Big) \text{ by definition of } \Gamma_\alpha\\
+	= -\beta(v_1,v_2) + \beta(v_1,v_2) \text{ because } \alpha \text{ is symplectic}\\
+	= 0
+\end{gather*}
+\mqed\\
+Suppose $L$ is a vector space. Then $L \oplus L^*$ carries the symplectic pairing $\beta_{can}$, 
+$$
+	\beta_{can}\Big((v,\alpha), (v',\alpha')\Big):= \alpha'(v) - \alpha(v')
+$$
+\textbf{Definition: }A \underline{polarization} of $(V,\beta)$ is a pair $(L,L')$ of transverse Lagrangian subspaces. Here transverse means $V = L + L'$, which is equivalent to their intersection being trivial.\\\\
+If you have a polarization, then $\beta^\#$ provides an isomorphism $L' \cong L^*$, so that $V \cong L \oplus L^*$ via Id$\otimes \beta^\#$, with the symplectic form $\beta_{can}$. In such a case, there exists a symplectic basis such that $L = $ span ($e_1,\dots, e_n)$ and $L' = $ span$(f_1,\dots,f_n)$. \\\\
+If we take a Lagrangian subspace $\extp \subset (L \oplus L^*, \beta_{can})$, if $\extp \pitchfork L^*$, we can think of $\extp$ as the graph of a uniquely determined linear map $q: L \to L^*$. There is a bijection 
+$$
+	\text{Hom}(L,L^*) \to \text{Hom}(L \times L, \bb R)
+$$
+where the first set is linear maps and the second set is bilinear maps. \newpage
+\noindent\textbf{Lemma: }\textit{$\Gamma_q$ is Lagrangian iff $\tilde q$ is symmetric, where $\tilde q$ is the image of $q$ through the above isomorphism.} \\
+\textbf{Proof: }We must show $\beta_{can} \equiv 0$ on $\Gamma_q$:
+\begin{gather*}
+	\beta_{can}\Big((u,q(u)),(v,q(v))	\Big)\\
+	\equiv q(v)(u)-q(u)(v)\\
+	= \tilde q(v,u) - \tilde q(u,v)
+\end{gather*} 
+which equals 0 $\forall\ u,v$ iff $\tilde q$ is symmetric.\mqed\\
+\textbf{Corollary: }\textit{$\Gamma_q$ is $i)-v)$ from the previous lecture's exercise iff $\tilde q$ is symmetric. }\\\\
+\textbf{Corollary: }\textit{$\Gamma_q \pitchfork L$ iff $\tilde q$ is non-degenerate.}\\\\
+\textbf{Exercise: }If $L_0 \pitchfork L_1$ are Lagrangian in $(V,\beta)$, then they can be identified with $\bb R^n \subset \bb C^n$ via a symplectic isomorphism. However, not any triple of pairwise transverse Lagrangians can be standardized in this way. We can identify $V \cong L_0 \oplus L_1$, and $L_2$ as the graph $\Gamma_q$ for some $q: L \to L^*$, so that $\tilde q$ is non-degenerate. We may define an invariant $\tau(L_0,L_1,L_2) \in \bb Z$ as the signature of $\tilde q \in \{-n, -n+2, \dots, n-2, n\}$. Show that $\tau$ is a complete invariant, i.e. it characterizes $(L_0, L_1, L_2)$ up to symplectic linear isomorphism. $\tau$ is often referred to as the Kashiwara index. \\\\
+We recall Sp$(V)$ is a closed subgroup of GL$(V)$, and as such is a Lie group. To examine the associated Lie algebra, we note\footnote{I really need to get a hold for how these calculations work} 
+\begin{gather*}
+	\text{Sp}(V,\beta) = \inv \varphi(0)\\
+	\varphi(A) = A^* \beta - \beta\\
+	\Rightarrow \mathfrak{sp}(V,\beta) = \text{Ker } D_I \varphi \\
+	= \{\xi \in \text{End}(V)\ |\ \beta(u,\xi v) + \beta(\xi u,v) = 0\}	\\
+	= J \cdot \text{symm}_g(V)
+\end{gather*}
+where we choose a complex structure $J$, and define $g = \beta(\cdot, J\cdot)$, and symm$_g(V)$ denotes the $V$-endomorphisms which are $g$-self-adjoint. In the case of $V = \bb R^{2n}$, this reduces to $J$ being multiplication by $i$ and symm$_g(V)$ being the set of symmetric matrices. This grants us a large number of symplectic matrices, by simply taking $\sigma$ any symmetric matrix, so that you have the 1-parameter subgroup 
+$$
+	t \mapsto \text{exp}(tJ_0\sigma)
+$$
+though we note this map is not always surjective. Note if $\lambda$ is an eigenvalue of a symplectic matrix, so is $\inv \lambda$, leading to a simply characterization of diagonal symplectic matrices. \\
+\textbf{Lemma: }\textit{If $A \in \text{Sp}(V,\beta)$, and $\lambda$ an eigenvalue, then $\inv \lambda$ is an eigenvalue of the same multiplicity, the multiplicities of $1$ and $-1$ are even, and }
+$$
+	\beta(E_\lambda, E_{\lambda'}) = 0
+$$
+unless $\lambda = \inv{\lambda'}$. \\
+\textbf{Proof: }Follow your nose, except the first part. To prove the first part, note $A \in $ Sp$(\bb R^{2n}, \beta_0)$ iff $A^T J_0 A = A$ ie
+\begin{gather*}
+	A^T = J_0 \inv A \inv{J_0}
+\end{gather*}
+so that $A^T,\ \inv A,$ and $A$ share the same characteristic polynomial. \mqed
+\\
+Suppose we fix a compatible complex structure, $(V,\beta, J)$, so that $g = \beta(\cdot, J\cdot)$ is the inner product, and $h = g-i\beta$ is the standard hermitian product. Then we have Sp$(V,\beta)$, GL($V,J)$ and $O(V,J)$ sitting inside $GL(V)$, which respect the structures $\beta, J, g$ respectively. Then if $A$ respects two of these structures, then it respects all 3. Stated formally, \\
+\textbf{Lemma: }
+\begin{gather*}
+		U(V,h) = \text{Sp}(V,\beta) \cap \text{Gl}(V,J)\\
+		= \text{Gl}(V,J) \cap O(V,g)\\
+		= \text{Sp}(V,\beta) \cap O(V,g)
+\end{gather*}\\
+\textbf{Theorem: }\textit{$U(n)$ is a deformation retract of Sp$(V,\bb R^{2n})$, and this deformation retraction is equivariant wrt conjugation on $U(n)$. Further, $U(n)$ is a maximal compact subgroup, and any other maximal compact subgroup is conjugate to $U(n)$. }\\
+Of course, this implies that they share homotopy groups. \\
+\textbf{Sketch of Proof: }We consider the ``Cartan involution'', $\Theta: GL(\bb R^d) \to GL(\bb R^d)$:
+$$
+	\Theta(A)= \inv{(A^T)} = (\inv A)^T
+$$
+because both inversion and transposition are anti-involutions\footnote{Do not make the mistake i did: anti-involution here means it reverses the order of group multiplication, not that it squares to -1. Since we we flip the group structure twice, ... }, $\Theta$ is indeed a homomorphism, and it is an involution. We note $(GL(\bb R^d))^\Theta = O(d)$, which will end up being a maximal compact subgroup. If $\theta = D_i \Theta: \mathfrak{gl}(\bb R^d) \to \mathfrak{gl}(\bb R^d)$, sending $x \to -x^T$, the $+1$ eigenspace is $\mathfrak{o}(d)$, but it also has a $-1$ eigenspace, the symmetric matrices. We also note 
+$$
+	[\text{Symm}(d), \mathfrak{o}(d)] \subset \text{Symm}(d)
+$$ 
+so there is an exponential map 
+$$
+	\text{exp}: \text{Symm}(d) \to S \equiv \{\text{pos def matrices}\}
+$$
+which turns out to be a diffeomorphism, so that we may define its inverse, the logarithm, by diagonalizing and taking log of the diagonals, and $S$ is invariant under conjugation by $O(d)$. \\
+\textbf{Lemma (Polar Decomposition for GL$(\bb R^d)$):}\textit{ The following map is a diffeomorphism: }
+\begin{gather*}
+	\Phi: \text{Symm}(d) \times O(d) \to \text{GL}(\bb R^d)\\
+(\xi, O) \mapsto \text{exp}(\xi)\cdot O
+\end{gather*}
+Note this implies $O(n)$ is a deformation retract of GL$(n)$, because vector spaces, (Symm$(d)$) are contractible. \\
+Proof of this lemma and the theorem in the next lemma. 
+\chapter{lec 6}
+\section*{Lecture 6, Sept 15}
+\label{sec:6}
+First we prove the lemma: \\
+\textbf{Lemma (Polar Decomposition for GL$(\bb R^d)$):}\textit{ The following map is a diffeomorphism: }
+\begin{gather*}
+	\Phi: \text{Symm}(d) \times O(d) \to \text{GL}(\bb R^d)\\
+(\xi, O) \mapsto \text{exp}(\xi)\cdot O
+\end{gather*}
+\textbf{Proof: }If $Q \in \text{End}(\bb R^d)$ is diagonalizable, and has real, non-negative eigenvalues, then we can take powers of $Q$ via
+\begin{gather*}
+	Q = A \text{ diag}(\lambda_1,\dots,\lambda_n)\inv A\\
+Q^\alpha = A \text{ diag}(\lambda_1^\alpha,\dots,\lambda_n^\alpha)\inv A\\
+\end{gather*}
+Assume $(V,g)$ is a $d$-dimensional inner product space, and $Z \in $GL($V)$. Then 
+$$
+	g(Z^*u,v) = g(u,Zv)
+$$
+$Z^*Z$ is self adjoint and positive semi-definite, thus it has a unique positive semi-definite (thus, symmetric) square root, $P := P_z = (Z^*Z)^{\frac{1}{2}}$. We set $O = O_z = \inv{P_z} Z$, so that 
+$$
+	Z = PO
+$$
+Let 
+$$
+		P = \text{exp}\xi
+$$
+defined via the logarithm, so $Z = \text{exp}(\xi)\cdot O$, so that $\Phi$ is surjective. For injectivity, say $Z = PO$, for $P$ positive semi definite and self adjoint, while $O$ is orthogonal. Then
+\begin{gather*}
+	ZZ^* = POO^*P^*\\
+	= PP^* = P^2
+\end{gather*}
+So $P$ is the unique positive definite square root of $Z^*Z$, so $O$ is also unique. Clearly $\Phi$ is smooth, as is its inverse. \mqed
+Now, for the proof of the theorem. Recall we were considering the map 
+\begin{gather*}
+	\Theta: \text{Sp}(\bb R^{2n}) \to \text{Sp}(\bb R^{2n}) \\
+	A \mapsto (\inv A)^T
+\end{gather*}
+and $\theta = D_I \Theta$, sending $\xi \mapsto -\xi^T$. Then
+\begin{alignat*}{1}
+	\text{Sp}(\bb R^{2n})^\Theta &= \text{Sp}(\bb R^{2n}) \cap O(2n)\ \ \ \ \text{(transpose the usual defn of } O(2n)\\
+	&= U(n)
+\end{alignat*}
+The second line coming from our 2-out-of-3 rule\footnote{Which I still have not internalized}. Let
+\begin{gather*}
+	\mathfrak{p} = E_{-1} \text{ wrt } \theta\\
+	= \mathfrak{sp}(\bb R^{2n}) \cap \text{Symm}(\bb R^{2n})\\
+	= J_0 \text{Symm}(\bb R^{2n}) \cap \text{Symm}(\bb R^{2n})
+\end{gather*} 
+	i.e. matrices which are symmetric, and remain symmetric after applying $J_0$. These have the form 
+$$
+	\begin{pmatrix} R & -S \\ S & R \end{pmatrix}\text{     for } R,S \in \text{Symm}(\bb R^{2n})
+$$
+We also note 
+$$
+	[\mathfrak{p},U(n)] \subset \mathfrak{p}
+$$
+We can exponentiate $P := \text{exp}\mathfrak{(p)} = \{$pos. def. symmetric, symplectic matrices$\}$. \\\\
+\textbf{Proposition (Polar Decomposition for Sp): }\textit{The following map is a diffeomorphism}
+\begin{gather*}
+	\Psi: U(n) \times \mathfrak{p} \to \text{Sp}(\bb R^{2n}) \\
+	(U,\xi) \mapsto U \cdot \text{exp}(\xi) 
+\end{gather*}
+\textit{and is equivariant wrt conjugation in $U(n)$.}\\
+\textbf{Proof: }We note that $\Psi = \Phi|_{U(n) \times \mathfrak{p}}$, so we have injectivity for free. If $Z$ is symplectic, then its polar part, $P_z$ is also symplectic\footnote{All the parts except the square root are obvious, idk why that should preserve being symplectic}. \mqed\\
+\textbf{Theorem: }\textit{$U(n)$ is a deformation retract of Sp$(V,\bb R^{2n})$, and this deformation retraction is equivariant wrt conjugation on $U(n)$. Further, $U(n)$ is a maximal compact subgroup, and any other maximal compact subgroup is conjugate to $U(n)$. }\\
+\textbf{Proof: }The first claim is done by the polar decomposition. The second and third group require knowledge of measure theory, which I do not possess, so I skipped this. \\\\
+\textbf{Exercise: }Suppose we consider the complex symplectic group, i.e. those complex matrices which preserve the standard symplectic form. Then claim Sp$(\bb C^{2n})$ deformation retracts to Sp($n$), the compact symplectic group, defined by 
+$$
+	\text{Sp}(n):= \{B \in GL(\bb H^n)\}
+$$
+\textbf{Proof hint: }You can use the same strategy of looking at the Cartan involution. \\\\
+\textbf{Definition: } Define $\mathcal{J}(V,\beta):= \{J \in \text{End}(V)\ |\ J^2 = -Id, \text{ and is compatible with } \beta\}$, the space of $\beta$-compatible complex structures on $V$. \\\\
+So Sp($V,\beta) \acts \mathcal{J}(V,\beta)$ transitively, by conjugation. So if we pick a reference complex structure, $J_0$, by the characterization of transitive actions, we have 
+$$
+	\mathcal{J}(V,\beta) \cong \frac{\text{Sp}(V,\beta)}{(J_0)^{\text{Sp}(V,\beta)}}
+$$
+sending
+$$
+	ZJ_0\inv Z \longmapsfrom [Z]
+$$
+What is the stabilizer of $J_0$? It is complex linear matrices which are also symplectic, $GL(V,\beta) \cap \text{Sp}(V,\beta)$. By our 2-out-of-3 rule\footnote{think im starting to get the hang of this thing}, that is equal to $U(V,\beta)$, so we are looking at cosets of the unitary group. But by polar decomposition, Sp$(\bb R^{2n}) \cong U(n) \times \mathfrak{p}$, so 
+$$
+	\mathcal{J}(V,\beta) \cong \mathfrak{p}
+$$
+so it is contractible, for example, which is a very important fact which we will use when studying psuedo-holomorphic curves. \\
+\textbf{Definition: } $\mathcal{L}(V,\beta)$ is the space of Lagrangian subspaces of $(V,\beta)$. \\\\
+We can study this in 2 ways: fix a complex structure $J$. \\
+i) $\mathcal{L}(V,\beta) \subset \mathcal{G}(V,\beta)$, the grassmanian. If $L \in \mathcal{L}(V,\beta)$, $(L,JL)$ is a polarization, in which case we may view $(V,\beta) \cong (L \oplus L^*, \beta_{can})$. We have a map
+\begin{gather*}
+	\text{Hom}(L,L^*)= \text{Bil}(L \times L, \bb R) \to \mathcal{G}(V,n)\\
+	\theta \mapsto \Gamma_\theta
+\end{gather*}
+We recall the graph of a map in Hom($L \times L, \bb R)$ is Lagrangian iff the bilinear form is symmetric, so the above map restricts to 
+$$
+	\text{Symm}^2(L^*) \to \mathcal{L}(V,n)
+$$
+Thus we deduce the dimension is $\frac{1}{2}n(n+1)$. \\
+ii) Pick $J,L$. Then $U(V) \acts \mathcal{L}(V)$ by $L \mapsto U(L)$, which is transitive, so that
+\begin{gather*}
+	\mathcal{L}(V) \cong U(V) \setminus L^{U(V)} \\
+	= U(V) \setminus O(L)
+\end{gather*}
+We may also consider the oriented Grassmannian, 
+$$
+	\tilde{\mathcal{G}}(V,\beta) := \{\text{oriented set of } n \text{ planes} \}
+$$
+which is a 2-fold cover of the un-oriented Grassmannian. This restricts to a 2-fold covering of the Lagrangian Grassmannian, 
+$$
+	U(n)\setminus SO(L) \cong \mathcal{L}^2(V) \to \mathcal{L}
+$$
+\textbf{Example: }$\mathcal{L}(\bb R^2)$ is the set of Lagrangian subspaces of $\bb R^2$, but all 1-d subspaces are Lagrangian, so $\mathcal{L}(\bb R^2) \cong \bb RP^1$, which has 2-fold covering of $\mathcal{L}^2(\bb R^2) \cong S^1$. \\\\
+\textbf{Example: } 
+$$
+	\Big(\tilde{\mathcal{G}}(\bb R^4,2), \mathcal{L}^2(\bb R^4)	\Big) \cong \Big((S^2 \times S^2), (S^1 \times S^2) \Big)
+$$
+\chapter{lec 7}
+\section*{Lecture 7, Sept 17}
+\label{sec:7}
+The determinant map 
+$$
+	\text{det}_\bb C: U(n) \to U(1) = S^1
+$$
+induces an isomorphism on the fundamental group. This is proved by the long exact sequence of homotopy groups for fiber bundles, with the fiber bundle
+$$
+	SU(n) \to U(n) \to U(1)
+$$
+thus we have an isomorphism 
+$$
+	\begin{tikzcd}
+U(n) \arrow[r] \arrow[rd, "c_1"', dashed, bend right] & U(1) \arrow[d] \\
+                                                      & \bb Z         
+\end{tikzcd}
+$$
+we name the composition $c_1$, representing the first chern class\footnote{no idea what this means}. Sometimes it is also referred to as the Maslov index. \\
+In general, 
+\begin{gather*}
+	H^1(X) \cong \text{Hom}(\pi_1(X),\bb Z)\\
+= \text{Hom}\big((\pi_1(X))_{Ab},\bb Z	\big)\\
+= \text{Hom}(H_1(X),\bb Z)
+\end{gather*}
+So $c_1$ is a generator for $H^1(U(n)) = \bb Z$. Because Sp($\bb R^{2n})$ deformation retracts onto $U(n)$, they share homotopy groups. We can do a similar process for the Lagrangian Grassmannian. We have 
+$$
+	\mathcal{L}(\bb R^{2n}) \cong \frac{U(n)}{O(n)}
+$$
+and we want to map it to $U(1)$ via the determinant. But that is not well defined because $O(n)$ can change the sign, but taking det$^2$ is well defined. In fact, \\
+\textbf{Lemma: }\textit{det$^2$ is a fiber bundle, and the fibers are connected and simply connected. }\\\\
+Consequently, we have an isomorphism 
+$$
+	\begin{tikzcd}
+\pi_1(\mathcal{L}(\bb R^{2n})) \arrow[r] \arrow[rd, "\mu"', dashed, bend right] & \pi_1(U(1)) \arrow[d] \\
+                                                                               & \bb Z                
+\end{tikzcd}
+$$
+where $\mu \in H^1(\mathcal{L}(\bb R^{2n})$ is called the Maslov index. \\\\
+We can also consider the universal cover
+$$
+	\mathcal{L}^\infty(\bb R^{2n}) \to \mathcal{L}(\bb R^{2n})
+$$
+which is the pull back by det$^2$ of the universal cover of the circle, resulting in the fibered product
+$$
+\mathcal{L}(\bb R^{2n}) \times_{\text{det}^2} \bb R
+$$
+\end{document}
