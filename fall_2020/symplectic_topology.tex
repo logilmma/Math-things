@@ -717,4 +717,167 @@ which is the pull back by det$^2$ of the universal cover of the circle, resultin
 $$
 \mathcal{L}(\bb R^{2n}) \times_{\text{det}^2} \bb R
 $$
+There is also the universal cover of 
+$$
+\begin{tikzcd}
+{\text{Sp}^\infty (V,\beta)} \arrow[d] \\
+{\text{Sp}(V,\beta)}                  
+\end{tikzcd}
+$$
+which should be a Lie group
+\begin{gather*}
+	\text{Sp}^\infty (V,\beta) = \big\{(A,\tilde A)\ |\ 	A \in \text{Sp}(V,\beta),\ 
+	\tilde A : \mathcal{L}^\infty (V,\beta) \to \mathcal{L}^\infty (V,\beta)\big\}
+\end{gather*}
+with $\tilde A$ being $\bb Z$ equivariant. \\\\
+Now onto actual symplectic manifolds. \\
+The general setting is a symplectic manifold, $(M,\omega)$, with $\omega \in \Omega^2(M)$, and $d\omega =0 $ and non-degenerate, and we are interested in symplectomorphisms $\phi: (M,\omega) \to (M',\omega')$ such that $\phi$ is a diffeo and 
+$$
+	\phi^* \omega' = \omega
+$$
+Each condition on $\omega$ gives rise to basic invariants, which also end up being constraints. Because $\omega$ is closed, $[\omega] \in H^2_{DR}(M)$ is an invariant in the sense that $\phi^*([\omega']) = [\omega]$. We note $TM \to M$ is a symplectic vector bundle, because each tangent space has a non-degenerate skew pairing. We know 
+$$
+\begin{tikzcd}
+H^2_{dR}(M) \arrow[r, "\sim"] \arrow[rd, dashed] & H^2_{sing}(M; \bb R) \arrow[d, "\wr"]     \\
+                                         & {\text{Hom}(H_2(M; \bb R), \bb R)}
+\end{tikzcd}
+$$
+, all arrows being isomorphisms. We know any homology class in degree 2 can be represented by a closed, oriented surface $\Sigma$ and an embedding $f: \Sigma \to H_2(M)$ realizing that class. Then given $[\eta] \in H^2_{dR}(M)$, let $\varphi([\eta])$ be the element of Hom($H_2(M), \bb R)$ sending 
+$$
+	[\Sigma, f] \mapsto \int_{\Sigma}f^* \eta
+$$
+The de Rham theorem states that $\varphi$ is an isomorphism. So given a form, pull it back and integrate over a surface. If we consider the case of $\bb R^{2n}, \omega_0)$, then $[\omega_0 = \sum_i dx_i \wedge dy_i] = 0$, making $(\bb R^{2n},\omega_0)$ an \underline{exact symplectic manifold}. It must be 0 since $H^2(\bb R^{2n}) = 0$, but we can also show that directly, since 
+$$
+	\omega_0 = d\sum_i x_i \wedge dy_i
+$$
+Given an exact symplectic manifold $(\omega = d\theta)$ and a map of a surface $f: \overline\Sigma \to M$, one has 
+\begin{gather*}
+	\int_{\Sigma}f^* \omega = \int_{\Sigma}f^*d\theta \\
+	= \int_\Sigma d(f^*\theta) = 0
+\end{gather*}
+by Stokes theorem. So there does not exist a 2-dim compact, symplectic submanifold $\Sigma$, because $\omega$ will restrict to be degenerate. OTOH, if $(M,\omega)$ is compact, then 
+$$
+\int_M [\omega]^n = \int_M \omega^n > 0
+$$
+This implies $[\omega]^n \ne 0 \Rightarrow [\omega] \ne 0 \Rightarrow M$ is not exact. \\
+As a result, for $n > 1$, $S^{2n}$ does not admit any symplectic forms, because $H^2(S^{2n}) = 0$, so any symplectic form would make $S^{2n}$ exact, but $S^{2n}$ is compact. \\
+\textbf{Example: }Take $S^p \times S^q$, $p + q$ even. Then when does it admit symplectic forms?\\
+Well, if both $p$ and $q$ are greater than 2, then $H^2 = 0$, so there are no symplectic structures. If $p = 2, q > 2$, then $H^2 = \bb R \cdot x$, but $x^2 = 0$, so that can't work either. We have (basically) shown that the only cases that work are $p = q = 2$, or $p = q = 1$. In the first case, we have the product symplectic form, and in the second, we restrict the standard symplectic form from $\bb R^2$ onto the torus. \\
+\textbf{Example: }$\overline{\bb CP^{2n}}$ is the complex projective space with the opposite orientation. There are no symplectic structures inducing this orientation: 
+\begin{gather*}
+	H^n(\bb CP^{2n}) = \frac{\bb R[h]}{(h^{2n+1})}
+\end{gather*}
+where $h$ has degree 2. So
+\begin{gather*}
+	[\omega] = c\cdot h \\
+	[\omega]^{2n}= c^{2n}\cdot h^{2n}
+\end{gather*}
+i.e. is always positive. The symplectic class also acts as a constraint on symplectomorphisms. \\
+\textbf{Example: }	($\bb CP^n, \tau_n)$:\\
+Say $\phi: \bb CP^n \to \bb CP^n$ is a diffeomorphism. Then claim $\phi^*[\tau_n] = \pm \tau_n$. This is true because the total volume of $M$ wrt $\omega$ must be equal to the volume of $M$ wrt $\omega'$, i.e. total volume is a symplectic invariant. \\
+\textbf{Exercise: } Let $(M,\omega)$ be compact and symplectic, and $\eta$ a closed 2-form. Then for small $\epsilon > 0$, $\omega + \epsilon \eta$ is symplectic, but if $[\eta] \ne 0$, $(M, \omega + \epsilon \eta)$ is not symplectomorphic to $(M,\omega)$. \\\\
+\textbf{Example: }For which nonzero $a,b$ does there exist a symplectomorphism $(S^2 \times S^2, a\omega \oplus b\omega) \cong (S^2 \times S^2, \omega \oplus \omega)$, where $\omega$ is a symplectic form on $	S^2$ such that $\int_{S^2} \omega = 1$? Partial answer: $H^2(S^2 \times S^2) \cong \bb Zx \oplus \bb Z y$. If $p_x, p_y$ denote the projection onto the first and second component, 
+$$
+	p_1^*[\omega] = x,\ \ \ \ \ \ \ p_2^*[\omega] = y
+$$
+Then
+\begin{gather*}
+	\int_{S^2 \times S^2} x \cdot y = 1,\ \ \ x^2 = y^2 = 0\\
+	\text{ then vol}(\omega \oplus \omega) = \int (x + y )^2 = 2 
+\end{gather*}
+while $a\omega \oplus b \omega$ has volume $2ab$, so we need $ab = 1$. However, any self diffeomorphism preserves the integer lattice $H^2(S^2 \times S^2, \bb Z) \subset H^2(S^2 \times S^2, \bb R)$. So if $\phi^*(\omega \oplus \omega) = a\omega \oplus b \omega$, then $a$ and $b$ must be integers, i.e. $a = b = 1$ or $a = b = -1$ are the only solutions. It turns out the latter case is not possible, and we will see how next lecture.
+\chapter{lec 8}
+\section*{Lecture 8, Sept 22}
+\label{sec:8}
+\textbf{Definition: }A \underline{symplectic vector bundle over $M$} is a real vector bundle over $M$, with a smooth section $\beta$ of $\extp^2V^*M$, defining a symplectic pairing on each fiber. Similarly, a \underline{symplectic map of symplectic vector bundles} is a bundle map covering the identity which restricts to a symplectic linear map on each vector space. \\\\
+\textbf{Example: }The main example is $(TM,\omega)$, where $(M,\omega)$ is a symplectic manifold. The fact that $\omega$, realizing the definition of $M$ being a symplectic manifold, is closed is not relevant, only its non degeneracy. \\\\
+Symplectic vector bundles are locally trivial, i.e. $\beta$ can be made standard. Further, there are sections $(e_1, \dots, e_n, f_1, \dots, f_n)$ over $U$ open forming a symplectic basis for $V_x$ for every $x \in U$. The proof of this is the exact same spirit as when we proved there existed local symplectic bases for vector spaces. \\\\
+\textbf{Theorem: }Every symplectic vector bundle $(V\to M, \beta)$ admits compatible complex structures. Moreover, the space $\mathcal{J}(V,\beta)$ of compatible complex structures is contractible. \\
+We will discuss exactly what we mean by ``space'' here later. \\
+\textbf{Nevertheless, proof: }View $M$ as a cell complex (we can do this by morse theory), and denote $M^k$ as the set of $k$-cells. We will construct a compatible complex structure $J^k$ on the $k$-skeleton, and proceed by induction. In the $k = 0$ case, we have a disjoint union of points, in which case we only need the existence of compatible complex structures on vector spaces, which we proved previously. For the inductive step, assume we have a compatible complex structure on the $k$-skeleton. Each $k+1$ cell $C$ is a $\overline{D^{k+1}}$ in $M$ attached to $M^k$ via $S^k \to M$. So $V|_C \to C$ is a vector bundle over $\overline{D^{k+1}}$, and we have a complex structure over $\partial C$. Then we can trivialize $V|_C \to C$, so that the given complex structure is a map 
+$$
+	J_{\partial C}: \partial C \to \mathcal{J}(\bb R^{2n})
+$$
+Then we wish to extend this to a map $C \to \mathcal{J}(\bb R^{2n})$, but this is possible because $\mathcal{J}(\bb R^{2n})$ is contractible, so each map on the boundary of a disk extends to a map on the disk itself. So we may extend $J^k$ over $J^{k+1}$, and the induction is finished. This is only a continuous extension, but it can be smoothed out, but we won't talk about the details of that. So we've shown there exists one compatible complex structure. We also claimed the space of such is contractible. Say we have 
+$$
+	J \in \mathcal{J}(V,\beta) = \{\text{sections of the fiber bundle } \bb J(V,\beta) \to M \text{ with fibers } \mathcal{J}(V_x,\beta_x)\}
+$$
+But a choice of $J_x \in \bb J(V,\beta)$ identifies $\mathcal{J}(V_x,\beta_x) \cong \mathfrak{p}_x$, so $\bb J(V,\beta)$ can be identified with a vector bundle $\mathfrak{p}\to M$. But the sections of a vector bundle are contractible, so we are done. \mqed\\
+The conclusion is that every symplectic vector bundle can be viewed as a complex vector bundle, which is itself determined up to complex VB isomorphism. Further, symplectic VB's are isomorphic iff they are iso as complex VB's, so the theory of symplectic VB's is basically isomorphic to the theory of complex VB's, which is generally well understood. \\\\
+So we get a constraint: A manifold admits symplectic forms only if it admits almost complex structures. We also get an invariant, i.e. $TM$, with its complex structure. Concretely, if we have a symplectomorphism $\phi: (M,\omega) \to (M', \omega')$, and a compatible almost complex structure $J' \in \mathcal{J}(M', \omega')$, then 
+$$
+	\phi^*J' \mathcal{J}(M,\omega)
+$$
+so Aut($M,\omega)$ preserves $\mathcal{J}(M,\omega)$. \\\\
+If we have any cts. complex vector bundle $E \to M$ of rank $n$, there are associated \underline{chern classes} 
+\begin{gather*}
+	c_i(E),\ i \in \{0,1,\dots,n\}\\
+	c_k(E) \in H^{2k}(X; \bb Z)
+\end{gather*}
+and $c_0 = 1 \in H^0$. \\
+\textbf{Theorem: }\textit{There exists exactly one way to assign $c_i$ such that the following hold}
+\begin{alignat*}{1}
+	&i) \text{ for } f: Y \to X,\ c_i(f^*E) = f^*(c_i(E))\\
+	&ii)\ \text{the \underline{total sum}},\ c(E) = \sum_i c_i(E) \in H^\bullet (X).
+\end{alignat*}
+$$
+\text{ Then for VB's } E,E' \text{ over } X,\ c(E \oplus E') = c(E) \smile c(E') 
+$$
+ie 
+$$
+	c_k(E \oplus E') = \sum_{i + j = k} c_i(E) \cup c_j(E') 
+$$
+and 
+$$
+iii) \text{ the tautological line bundle, } \ell, \text{ has } \langle c_1(\ell), [\bb CP^1]\rangle = -1
+$$
+\textbf{Example: } $c(T \bb CP^n)$. We may restrict the tautological line bundle to $\bb CP^1$, 
+$$
+\begin{tikzcd}
+\ell_n \arrow[d] & \text{to} & \ell_1 \arrow[d] \\
+\bb CP^n       &           & \bb CP^1      
+\end{tikzcd}
+$$
+We recall the cohomology of $\bb CP^n$: 
+$$
+H^k(\bb CP^n; \bb Z) = \begin{cases}
+	\bb Z & k\text{ is even and } 0 \leq k \leq 2n\\
+	0 & k >  2n
+\end{cases}
+$$
+with cohomology ring 
+$$
+H^*(\bb CP^n; \bb Z) \cong \frac{\bb Z[x]}{x^{n+1}}
+$$
+where $x$ is the generator of the second degree cohomology, and $x^i$ is a generator of $H^{2i}(\bb CP^n; \bb Z)$. If we consider the inclusion $\bb CP^1 \to \bb CP^n$, we have that 
+$$
+	i^* x_n = x_1
+$$
+where $x_i$ is the generator of $H^2(\bb CP^i; \bb Z)$. Then we may compute 
+\begin{gather*}
+	i^*c_1(\ell_n) = c_1i^*(\ell_n) = i^*c_1(\ell_1) = -i^*x_n = -x_1
+\end{gather*}
+The third equality comes from the fact that $x$ is characterized by the property $\langle x, [\bb CP^1] \rangle = 1$. COMEBACKTOTHIS\\\\
+But we were interested in the tangent bundle, not the line bundle. We know the tangent space looks like, thinking of $\bb C^{n+1}\setminus \lambda$ as $\lambda^\perp$,
+$$
+	T_\lambda(\bb CP^n) = \text{Hom}(\lambda, \bb C^{n+1}\setminus \lambda) = \lambda^* \otimes \bb C^{n+1}\setminus \lambda
+$$
+where the first equality is realized by taking graphs. So globally, the tangent bundle looks like 
+$$
+	T(\bb CP^n) = \ell_n^* \otimes \left(\frac{\bb C^{n+1}}{\ell_n}\right)
+$$
+So we get a SES of vector bundles, where the underline indicates a trivial bundle
+$$
+	0 \to \ell_n \to \underline{\bb C^{n+1}} \to \underline{\bb C^{n+1}}\setminus \ell_n \to 0
+$$
+tensoring with $\ell^*$ gives the new SES
+$$
+	0 \to \bb C \to \ell_n^{\oplus n+1} \to \ell_n \otimes \underline{\bb C^{n+1}}\setminus \ell_n = T\bb CP^n\to 0
+$$
+The sequence splits, so that 
+$$
+\ell_n^{\oplus n + 1} \cong \underline{\bb C} \oplus T\bb CP^n
+$$
+\textbf{Lemma: }\textit{The total chern class of a trivial line bundle is 1.}\\
+\textbf{Proof: }
 \end{document}
